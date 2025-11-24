@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* tomiwa: Import fonts */
+@import url('https://fonts.cdnfonts.com/css/monument-extended');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --background: #ffffff;
+  --foreground: #021126;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #021126;
+    --foreground: #ffffff;
+  }
+}
+
+/* tomiwa: Base styles for better typography and spacing */
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: 'Montserrat Alternates', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Monument Extended', system-ui, -apple-system, sans-serif;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+/* tomiwa: Focus styles for better accessibility */
+*:focus-visible {
+  outline: 2px solid #36D0D8;
+  outline-offset: 2px;
+}
+
+/* tomiwa: Custom rounded corners */
+.rounded-brand {
+  border-radius: 1rem;
+}
+
+/* tomiwa: Custom shadows */
+.shadow-brand {
+  box-shadow: 0 4px 20px rgba(54, 208, 216, 0.1);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  /* tomiwa: Line clamp utilities for text truncation */
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+  
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+  
+  /* tomiwa: Safe area padding for mobile devices */
+  .safe-area-pb {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  /* tomiwa: Fade-in animation for smooth content transitions */
+  .animate-fadeIn {
+    animation: fadeIn 0.4s ease-in-out;
+  }
+  
+  /* tomiwa: Slide-up animation for toast notifications */
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+}
+
+/* tomiwa: Keyframes for fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* tomiwa: Keyframes for slide-up animation (used for toast notifications) */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,7 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+project rule, use tailwind.config.js colors only, dont mnaufactor any random coclor that is not on the projeetc and maintain the layout type so th designs look like they are for the same project.
+Apply brand colors: primary orange (#EF522E), secondary aqua (#36D0D8), tertiary yellow (#FDD140), dark navy (#021126), and white (#FFFFFF). Use Monument Extended for all headers (H1–H3) and Montserrat Alternates for all body text and UI elements. Apply a consistent 12px corner radius across all cards, buttons, inputs, and images. Layout should remain clean with alternating light/dark/tinted sections for hierarchy." use logo from public/images
