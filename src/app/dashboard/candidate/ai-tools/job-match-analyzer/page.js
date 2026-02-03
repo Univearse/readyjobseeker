@@ -38,7 +38,11 @@ import {
   BanknotesIcon,
   BuildingOfficeIcon,
   AcademicCapIcon,
-  TrophyIcon
+  TrophyIcon,
+  MapPinIcon,
+  EnvelopeIcon,
+  PhoneIcon,
+  GlobeAltIcon
 } from '@heroicons/react/24/outline';
 
 export default function JobMatchAnalyzer() {
@@ -50,16 +54,72 @@ export default function JobMatchAnalyzer() {
   const [jobDescription, setJobDescription] = useState('');
   const [jobTitle, setJobTitle] = useState('');
   const [companyName, setCompanyName] = useState('');
-  const [candidateProfile, setCandidateProfile] = useState({
-    skills: '',
-    experience: '',
-    education: '',
-    achievements: ''
-  });
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisResults, setAnalysisResults] = useState(null);
   const [fromApplication, setFromApplication] = useState(false);
   const [jobId, setJobId] = useState(null);
+  
+  // tomiwa: NEW - Job source selection state
+  const [jobSource, setJobSource] = useState('custom'); // 'custom', 'platform'
+  const [selectedPlatformJob, setSelectedPlatformJob] = useState(null);
+  
+  // tomiwa: NEW - Candidate profile data loaded from platform profile
+  const [candidateProfile, setCandidateProfile] = useState({
+    personal: {
+      firstName: 'Sarah',
+      lastName: 'Johnson',
+      title: 'Senior Frontend Developer',
+      email: 'sarah.johnson@email.com',
+      phone: '+1 (555) 123-4567',
+      location: 'San Francisco, CA',
+      website: 'www.sarahjohnson.dev',
+      avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face'
+    },
+    summary: 'Passionate and results-driven full-stack developer with 5+ years of experience building scalable web applications using React, Next.js, Node.js, and modern JavaScript frameworks. Proven track record of leading cross-functional teams and delivering high-impact projects that serve 10,000+ users daily.',
+    experience: [
+      {
+        id: 1,
+        company: 'TechCorp Inc.',
+        position: 'Senior Frontend Developer',
+        location: 'San Francisco, CA',
+        startDate: '2022-01',
+        endDate: 'Present',
+        description: 'Lead frontend development for enterprise SaaS platform serving 10k+ users. Built responsive React components and optimized performance.'
+      },
+      {
+        id: 2,
+        company: 'StartupXYZ',
+        position: 'Frontend Developer',
+        location: 'Remote',
+        startDate: '2020-03',
+        endDate: '2021-12',
+        description: 'Developed user interfaces for mobile-first web application. Collaborated with design team to implement pixel-perfect designs.'
+      }
+    ],
+    education: [
+      {
+        id: 1,
+        institution: 'Stanford University',
+        degree: 'Bachelor of Science in Computer Science',
+        location: 'Stanford, CA',
+        startDate: '2016-09',
+        endDate: '2020-05',
+        gpa: '3.8',
+        link: 'https://stanford.edu'
+      }
+    ],
+    skills: {
+      technical: ['React', 'JavaScript', 'TypeScript', 'Node.js', 'Next.js', 'HTML/CSS', 'Git', 'AWS', 'Docker'],
+      frameworks: ['React', 'Next.js', 'Express.js', 'Tailwind CSS'],
+      tools: ['Figma', 'VS Code', 'GitHub', 'Jira', 'Slack'],
+      languages: ['JavaScript', 'TypeScript', 'Python', 'SQL']
+    },
+    achievements: [
+      'Increased user engagement by 40% through redesign of main product flow',
+      'Led team of 5 developers on successful product launch',
+      'Reduced application load times by 35% through performance optimization'
+    ]
+  });
 
   // tomiwa: Load job context from URL parameters and auto-analyze
   useEffect(() => {
@@ -104,15 +164,7 @@ What You'll Do:
 
       setJobDescription(jobDesc);
       
-      // tomiwa: Auto-populate candidate profile from mock data
-      const candidateData = {
-        skills: 'React, JavaScript, Node.js, AWS, Git, Figma, Sketch, Adobe Creative Suite, HTML/CSS, Design Systems, User Research, Prototyping',
-        experience: '4 years of product design experience with focus on web and mobile applications. Led design for 3 major product launches. Experience in e-commerce and SaaS platforms.',
-        education: 'Bachelor of Fine Arts in Graphic Design, Minor in Computer Science. Certified in UX Design from Google.',
-        achievements: 'Increased user engagement by 40% through redesign of main product flow. Won Best Design Award at TechCrunch Disrupt 2023. Published case study on design system implementation.'
-      };
-      
-      setCandidateProfile(candidateData);
+      // tomiwa: Profile data is already loaded from platform, no need to set again
       
       // tomiwa: Auto-start analysis when coming from applications
       if (fromAppParam === 'true') {
@@ -131,6 +183,91 @@ What You'll Do:
       }
     }
   }, [searchParams]);
+
+  // tomiwa: NEW - Mock platform jobs data
+  const platformJobs = [
+    {
+      id: 'job_001',
+      title: 'Senior Frontend Developer',
+      company: 'TechFlow Solutions',
+      location: 'San Francisco, CA',
+      type: 'Full-time',
+      salary: '$120,000 - $160,000',
+      posted: '2 days ago',
+      matchScore: 92,
+      description: `We are seeking a Senior Frontend Developer to join our innovative team at TechFlow Solutions.
+
+Key Requirements:
+• 5+ years of experience in React and modern JavaScript
+• Proficiency in TypeScript, Next.js, and Node.js
+• Experience with responsive design and mobile-first development
+• Strong understanding of state management (Redux, Context API)
+• Knowledge of testing frameworks (Jest, React Testing Library)
+• Experience with CI/CD pipelines and deployment
+• Bachelor's degree in Computer Science or related field
+
+What You'll Do:
+• Lead frontend architecture decisions for our SaaS platform
+• Mentor junior developers and conduct code reviews
+• Collaborate with design and backend teams
+• Optimize application performance and user experience
+• Implement new features and maintain existing codebase`,
+      skills: ['React', 'TypeScript', 'Next.js', 'Node.js', 'JavaScript', 'CSS', 'Git']
+    },
+    {
+      id: 'job_002',
+      title: 'Full Stack Developer',
+      company: 'InnovateCorp',
+      location: 'Remote',
+      type: 'Full-time',
+      salary: '$100,000 - $140,000',
+      posted: '5 days ago',
+      matchScore: 87,
+      description: `Join InnovateCorp as a Full Stack Developer and help build cutting-edge web applications.
+
+Key Requirements:
+• 3+ years of full-stack development experience
+• Proficiency in React, Node.js, and Express.js
+• Experience with databases (PostgreSQL, MongoDB)
+• Knowledge of cloud platforms (AWS, Azure)
+• Understanding of RESTful APIs and GraphQL
+• Experience with version control (Git) and agile methodologies
+
+Responsibilities:
+• Develop and maintain web applications
+• Design and implement APIs
+• Work with cross-functional teams
+• Ensure code quality and performance optimization`,
+      skills: ['React', 'Node.js', 'Express.js', 'PostgreSQL', 'MongoDB', 'AWS', 'Git']
+    },
+    {
+      id: 'job_003',
+      title: 'React Developer',
+      company: 'StartupXYZ',
+      location: 'New York, NY',
+      type: 'Contract',
+      salary: '$80 - $120/hour',
+      posted: '1 week ago',
+      matchScore: 85,
+      description: `StartupXYZ is looking for a skilled React Developer to join our dynamic team.
+
+Requirements:
+• 3+ years of React development experience
+• Strong JavaScript and ES6+ knowledge
+• Experience with state management libraries
+• Familiarity with modern build tools (Webpack, Vite)
+• Understanding of component-based architecture
+• Experience with testing and debugging
+
+Key Responsibilities:
+• Build responsive user interfaces
+• Implement new features and functionality
+• Collaborate with designers and backend developers
+• Maintain and improve existing codebase`,
+      skills: ['React', 'JavaScript', 'Redux', 'Webpack', 'CSS', 'HTML']
+    }
+  ];
+
 
   // tomiwa: Mock analysis results
   const mockAnalysisResults = {
@@ -229,27 +366,58 @@ What You'll Do:
     }
   };
 
-  // tomiwa: Handle profile input changes
-  const handleProfileChange = (field, value) => {
-    setCandidateProfile(prev => ({
-      ...prev,
-      [field]: value
-    }));
+  // tomiwa: Profile data is read-only from platform, no input changes needed
+
+  // tomiwa: NEW - Handle job source selection
+  const handleJobSourceChange = (source) => {
+    setJobSource(source);
+    // Reset selections when switching sources
+    setSelectedPlatformJob(null);
+    setJobDescription('');
+    setJobTitle('');
+    setCompanyName('');
   };
 
-  // tomiwa: Analyze job match
+  // tomiwa: NEW - Handle platform job selection
+  const handlePlatformJobSelect = (job) => {
+    setSelectedPlatformJob(job);
+    setJobDescription(job.description);
+    setJobTitle(job.title);
+    setCompanyName(job.company);
+    setJobId(job.id);
+  };
+
+  // tomiwa: Analyze job match - updated for custom and platform sources
   const analyzeMatch = async () => {
-    if (!jobDescription.trim()) {
-      alert('Please paste a job description');
+    // Check if we have job data from any source
+    const hasJobData = jobDescription.trim() || selectedPlatformJob;
+    
+    if (!hasJobData) {
+      alert('Please select a job or enter a job description');
       return;
+    }
+
+    // If platform job is selected but no description, use its description
+    if (!jobDescription.trim() && selectedPlatformJob) {
+      setJobDescription(selectedPlatformJob.description);
+      setJobTitle(selectedPlatformJob.title);
+      setCompanyName(selectedPlatformJob.company);
     }
 
     setIsAnalyzing(true);
     setActiveStep('analyzing');
 
-    // tomiwa: Simulate AI analysis
+    // tomiwa: Simulate AI analysis with enhanced results based on source
     setTimeout(() => {
-      setAnalysisResults(mockAnalysisResults);
+      let enhancedResults = { ...mockAnalysisResults };
+      
+      // Adjust results based on job source
+      if (selectedPlatformJob) {
+        enhancedResults.overallMatch = selectedPlatformJob.matchScore;
+        enhancedResults.applicationStrategy.priority = selectedPlatformJob.matchScore >= 85 ? 'High' : 'Medium';
+      }
+      
+      setAnalysisResults(enhancedResults);
       setActiveStep('results');
       setIsAnalyzing(false);
     }, 3000);
@@ -262,15 +430,8 @@ What You'll Do:
     return 'text-red-600 bg-red-50';
   };
 
-  // tomiwa: Get priority color
-  const getPriorityColor = (priority) => {
-    switch (priority.toLowerCase()) {
-      case 'high': return 'bg-red-100 text-red-800 border-red-200';
-      case 'medium': return 'bg-orange-100 text-orange-800 border-orange-200';
-      case 'low': return 'bg-green-100 text-green-800 border-green-200';
-      default: return 'bg-neutral-100 text-neutral-800 border-neutral-200';
-    }
-  };
+  // tomiwa: REMOVED - getPriorityColor function was removed as colorful priority styling
+  // was replaced with clean light teal styling in the Improvement Recommendations card
 
   return (
     <CandidateDashboardLayout>
@@ -332,7 +493,7 @@ What You'll Do:
       {/* tomiwa: Main content */}
       <div className="px-6 sm:px-8 md:px-10 lg:px-12 xl:px-16 2xl:px-20 pb-12">
         
-        {/* tomiwa: Progress indicator */}
+        {/* tomiwa: Progress indicator - simplified workflow */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center space-x-4">
@@ -341,7 +502,7 @@ What You'll Do:
                 activeStep !== 'input' ? 'bg-emerald-500 text-white' : 'bg-neutral-100 text-neutral-600'
               }`}>
                 <span className="w-5 h-5 rounded-full bg-current opacity-20"></span>
-                Job & Profile Input
+                Job Description
               </div>
               <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium ${
                 activeStep === 'analyzing' ? 'bg-emerald-600 text-white' : 
@@ -358,136 +519,351 @@ What You'll Do:
               </div>
             </div>
           </div>
+          
+          {/* tomiwa: NEW - Profile status indicator */}
+          <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
+            <div className="flex items-center gap-3">
+              <CheckCircleIcon className="w-6 h-6 text-emerald-600" />
+              <div>
+                <h3 className="font-semibold text-emerald-800">Profile Ready</h3>
+                <p className="text-emerald-700 text-sm">
+                  Using your complete platform profile for analysis • 
+                  <Link href="/dashboard/candidate/profile" className="ml-1 underline hover:no-underline">
+                    Edit Profile
+                  </Link>
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* tomiwa: Input Step */}
         {activeStep === 'input' && (
           <div className="space-y-8">
-            {/* tomiwa: Job information */}
+            {/* tomiwa: NEW - Job Source Selection Toggle */}
             <div className="bg-white rounded-lg shadow-sm p-6">
               <h2 className="text-xl font-bold text-neutral-900 mb-6 flex items-center gap-2">
                 <DocumentTextIcon className="w-6 h-6 text-emerald-600" />
-                Job Information
+                Select Job Source
               </h2>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div>
-                  <label className="block text-sm font-semibold text-neutral-700 mb-2">
-                    Job Title (Optional)
-                  </label>
-                  <input
-                    type="text"
-                    value={jobTitle}
-                    onChange={(e) => setJobTitle(e.target.value)}
-                    placeholder="e.g., Senior Software Engineer"
-                    className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600"
-                  />
+              {/* tomiwa: Toggle buttons - simplified to two options */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                <button
+                  onClick={() => handleJobSourceChange('custom')}
+                  className={`p-4 rounded-lg border-2 transition-all ${
+                    jobSource === 'custom'
+                      ? 'border-emerald-600 bg-emerald-50 text-emerald-800'
+                      : 'border-neutral-300 bg-white text-neutral-700 hover:border-emerald-300'
+                  }`}
+                >
+                  <div className="text-center">
+                    <DocumentTextIcon className="w-8 h-8 mx-auto mb-2" />
+                    <h3 className="font-semibold mb-1">Custom Job Description</h3>
+                    <p className="text-sm opacity-80">Paste any job description from external sources</p>
+                  </div>
+                </button>
+                
+                <button
+                  onClick={() => handleJobSourceChange('platform')}
+                  className={`p-4 rounded-lg border-2 transition-all ${
+                    jobSource === 'platform'
+                      ? 'border-brand-aqua bg-brand-aqua/10 text-brand-aqua'
+                      : 'border-neutral-300 bg-white text-neutral-700 hover:border-brand-aqua/50'
+                  }`}
+                >
+                  <div className="text-center">
+                    <BuildingOfficeIcon className="w-8 h-8 mx-auto mb-2" />
+                    <h3 className="font-semibold mb-1">Platform Jobs</h3>
+                    <p className="text-sm opacity-80">Choose from available jobs on our platform</p>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            {/* tomiwa: Custom Job Input */}
+            {jobSource === 'custom' && (
+              <div className="bg-white rounded-lg shadow-sm p-6">
+                <h3 className="text-lg font-semibold text-neutral-900 mb-4">Enter Job Details</h3>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <div>
+                    <label className="block text-sm font-semibold text-neutral-700 mb-2">
+                      Job Title (Optional)
+                    </label>
+                    <input
+                      type="text"
+                      value={jobTitle}
+                      onChange={(e) => setJobTitle(e.target.value)}
+                      placeholder="e.g., Senior Software Engineer"
+                      className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-semibold text-neutral-700 mb-2">
+                      Company Name (Optional)
+                    </label>
+                    <input
+                      type="text"
+                      value={companyName}
+                      onChange={(e) => setCompanyName(e.target.value)}
+                      placeholder="e.g., TechCorp Inc."
+                      className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600"
+                    />
+                  </div>
                 </div>
                 
                 <div>
                   <label className="block text-sm font-semibold text-neutral-700 mb-2">
-                    Company Name (Optional)
+                    Job Description *
                   </label>
-                  <input
-                    type="text"
-                    value={companyName}
-                    onChange={(e) => setCompanyName(e.target.value)}
-                    placeholder="e.g., TechCorp Inc."
-                    className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600"
+                  <textarea
+                    value={jobDescription}
+                    onChange={(e) => setJobDescription(e.target.value)}
+                    placeholder="Paste the complete job description here..."
+                    rows={8}
+                    className="w-full p-4 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 resize-none"
                   />
+                  <p className="text-sm text-neutral-500 mt-2">
+                    Include requirements, qualifications, and job responsibilities for the most accurate analysis.
+                  </p>
                 </div>
               </div>
+            )}
+
+            {/* tomiwa: Platform Jobs Selection */}
+            {jobSource === 'platform' && (
+              <div className="bg-white rounded-lg shadow-sm p-6">
+                <h3 className="text-lg font-semibold text-neutral-900 mb-4">Available Platform Jobs</h3>
+                <p className="text-neutral-600 mb-6">Select a job from our platform to analyze your match score</p>
+                
+                <div className="space-y-4">
+                  {platformJobs.map((job) => (
+                    <div
+                      key={job.id}
+                      onClick={() => handlePlatformJobSelect(job)}
+                      className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
+                        selectedPlatformJob?.id === job.id
+                          ? 'border-brand-aqua bg-brand-aqua/5'
+                          : 'border-neutral-200 hover:border-brand-aqua/50 hover:bg-neutral-50'
+                      }`}
+                    >
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3 mb-2">
+                            <h4 className="font-semibold text-neutral-900">{job.title}</h4>
+                            <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                              job.matchScore >= 90 ? 'bg-emerald-100 text-emerald-800' :
+                              job.matchScore >= 80 ? 'bg-orange-100 text-orange-800' :
+                              'bg-red-100 text-red-800'
+                            }`}>
+                              {job.matchScore}% Match
+                            </span>
+                          </div>
+                          <p className="text-brand-aqua font-medium text-sm mb-1">{job.company} • {job.location}</p>
+                          <div className="flex flex-wrap gap-2 mb-2">
+                            <span className="text-xs bg-neutral-100 text-neutral-700 px-2 py-1 rounded">{job.type}</span>
+                            <span className="text-xs bg-neutral-100 text-neutral-700 px-2 py-1 rounded">{job.salary}</span>
+                            <span className="text-xs bg-neutral-100 text-neutral-700 px-2 py-1 rounded">{job.posted}</span>
+                          </div>
+                          <div className="flex flex-wrap gap-1">
+                            {job.skills.slice(0, 5).map((skill, index) => (
+                              <span key={index} className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                                {skill}
+                              </span>
+                            ))}
+                            {job.skills.length > 5 && (
+                              <span className="text-xs text-neutral-500">+{job.skills.length - 5} more</span>
+                            )}
+                          </div>
+                        </div>
+                        {selectedPlatformJob?.id === job.id && (
+                          <CheckCircleIcon className="w-6 h-6 text-brand-aqua" />
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+
+            {/* tomiwa: NEW - Candidate Profile Preview (Read-only) */}
+            <div className="bg-white rounded-lg shadow-sm p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-bold text-neutral-900 flex items-center gap-2">
+                  <UserIcon className="w-6 h-6 text-brand-aqua" />
+                  Your Profile Preview
+                </h2>
+                <Link
+                  href="/dashboard/candidate/profile"
+                  className="text-sm text-brand-aqua hover:text-brand-orange font-medium transition-colors"
+                >
+                  Edit Profile →
+                </Link>
+              </div>
               
+              {/* tomiwa: Profile header with photo and basic info */}
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 mb-6 p-4 bg-gradient-to-r from-brand-aqua/5 to-brand-orange/5 rounded-lg">
+                <div className="flex-shrink-0">
+                  <img
+                    src={candidateProfile.personal.avatar}
+                    alt={`${candidateProfile.personal.firstName} ${candidateProfile.personal.lastName}`}
+                    className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover border-4 border-white shadow-lg"
+                  />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-xl sm:text-2xl font-bold text-brand-black mb-1">
+                    {candidateProfile.personal.firstName} {candidateProfile.personal.lastName}
+                  </h3>
+                  <p className="text-brand-aqua font-semibold mb-2">{candidateProfile.personal.title}</p>
+                  <div className="flex flex-wrap gap-2 sm:gap-4 text-xs sm:text-sm text-neutral-600">
+                    <span className="flex items-center gap-1">
+                      <MapPinIcon className="w-3 h-3 sm:w-4 sm:h-4" />
+                      <span className="truncate max-w-[120px] sm:max-w-none">{candidateProfile.personal.location}</span>
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <EnvelopeIcon className="w-3 h-3 sm:w-4 sm:h-4" />
+                      <span className="truncate max-w-[120px] sm:max-w-none">{candidateProfile.personal.email}</span>
+                    </span>
+                    {candidateProfile.personal.website && (
+                      <span className="flex items-center gap-1">
+                        <GlobeAltIcon className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <span className="truncate max-w-[120px] sm:max-w-none">{candidateProfile.personal.website}</span>
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* tomiwa: Professional summary */}
+              <div className="mb-6">
+                <h4 className="text-lg font-semibold text-neutral-900 mb-3">Professional Summary</h4>
+                <p className="text-neutral-700 leading-relaxed bg-neutral-50 p-4 rounded-lg">
+                  {candidateProfile.summary}
+                </p>
+              </div>
+
+              {/* tomiwa: Skills overview - responsive grid */}
+              <div className="mb-6">
+                <h4 className="text-lg font-semibold text-neutral-900 mb-3">Skills & Technologies</h4>
+                <div className="grid grid-cols-1 
+                  sm:grid-cols-1 
+                  md:grid-cols-2 
+                  lg:grid-cols-2 
+                  xl:grid-cols-2 
+                  2xl:grid-cols-2 
+                  gap-4 md:gap-6">
+                  <div>
+                    <h5 className="text-sm font-medium text-neutral-700 mb-2">Technical Skills</h5>
+                    <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                      {candidateProfile.skills.technical.map((skill, index) => (
+                        <span key={index} className="px-2 py-1 sm:px-3 sm:py-1 bg-emerald-100 text-emerald-800 rounded-full text-xs sm:text-sm">
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <h5 className="text-sm font-medium text-neutral-700 mb-2">Frameworks & Tools</h5>
+                    <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                      {candidateProfile.skills.frameworks.concat(candidateProfile.skills.tools).slice(0, 6).map((skill, index) => (
+                        <span key={index} className="px-2 py-1 sm:px-3 sm:py-1 bg-blue-100 text-blue-800 rounded-full text-xs sm:text-sm">
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* tomiwa: Experience highlights */}
+              <div className="mb-6">
+                <h4 className="text-lg font-semibold text-neutral-900 mb-3">Recent Experience</h4>
+                <div className="space-y-3">
+                  {candidateProfile.experience.slice(0, 2).map((exp, index) => (
+                    <div key={exp.id} className="border-l-4 border-brand-aqua pl-4 py-2">
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                        <h5 className="font-semibold text-neutral-900">{exp.position}</h5>
+                        <span className="text-sm text-neutral-600">{exp.startDate} - {exp.endDate}</span>
+                      </div>
+                      <p className="text-brand-aqua font-medium text-sm mb-1">{exp.company} • {exp.location}</p>
+                      <p className="text-neutral-700 text-sm">{exp.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* tomiwa: Education */}
+              <div className="mb-6">
+                <h4 className="text-lg font-semibold text-neutral-900 mb-3">Education</h4>
+                {candidateProfile.education.map((edu, index) => (
+                  <div key={edu.id} className="bg-neutral-50 p-4 rounded-lg">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                      <h5 className="font-semibold text-neutral-900">{edu.degree}</h5>
+                      <span className="text-sm text-neutral-600">{edu.startDate} - {edu.endDate}</span>
+                    </div>
+                    <p className="text-brand-aqua font-medium text-sm">{edu.institution} • {edu.location}</p>
+                    {edu.gpa && <p className="text-neutral-600 text-sm">GPA: {edu.gpa}</p>}
+                  </div>
+                ))}
+              </div>
+
+              {/* tomiwa: Key achievements */}
               <div>
-                <label className="block text-sm font-semibold text-neutral-700 mb-2">
-                  Job Description *
-                </label>
-                <textarea
-                  value={jobDescription}
-                  onChange={(e) => setJobDescription(e.target.value)}
-                  placeholder="Paste the complete job description here..."
-                  rows={8}
-                  className="w-full p-4 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 resize-none"
-                />
-                <p className="text-sm text-neutral-500 mt-2">
-                  Include requirements, qualifications, and job responsibilities for the most accurate analysis.
+                <h4 className="text-lg font-semibold text-neutral-900 mb-3">Key Achievements</h4>
+                <div className="space-y-2">
+                  {candidateProfile.achievements.map((achievement, index) => (
+                    <div key={index} className="flex items-start gap-3">
+                      <TrophyIcon className="w-5 h-5 text-brand-yellow mt-0.5 flex-shrink-0" />
+                      <p className="text-neutral-700 text-sm">{achievement}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* tomiwa: Profile completeness indicator */}
+              <div className="mt-6 p-4 bg-emerald-50 rounded-lg border border-emerald-200">
+                <div className="flex items-center gap-2 mb-2">
+                  <CheckCircleIcon className="w-5 h-5 text-emerald-600" />
+                  <span className="font-semibold text-emerald-800">Profile Ready for Analysis</span>
+                </div>
+                <p className="text-emerald-700 text-sm">
+                  Your profile contains all the necessary information for accurate job matching analysis.
                 </p>
               </div>
             </div>
 
-            {/* tomiwa: Candidate profile */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-xl font-bold text-neutral-900 mb-6 flex items-center gap-2">
-                <UserIcon className="w-6 h-6 text-brand-aqua" />
-                Your Profile
-              </h2>
-              
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-sm font-semibold text-neutral-700 mb-2">
-                    Skills & Technologies
-                  </label>
-                  <textarea
-                    value={candidateProfile.skills}
-                    onChange={(e) => handleProfileChange('skills', e.target.value)}
-                    placeholder="List your technical skills, programming languages, frameworks, tools, etc."
-                    rows={3}
-                    className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 resize-none"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-semibold text-neutral-700 mb-2">
-                    Work Experience
-                  </label>
-                  <textarea
-                    value={candidateProfile.experience}
-                    onChange={(e) => handleProfileChange('experience', e.target.value)}
-                    placeholder="Describe your relevant work experience, years in field, key projects, etc."
-                    rows={3}
-                    className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 resize-none"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-semibold text-neutral-700 mb-2">
-                    Education & Certifications
-                  </label>
-                  <textarea
-                    value={candidateProfile.education}
-                    onChange={(e) => handleProfileChange('education', e.target.value)}
-                    placeholder="Your educational background, degrees, certifications, relevant courses, etc."
-                    rows={2}
-                    className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 resize-none"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-semibold text-neutral-700 mb-2">
-                    Key Achievements (Optional)
-                  </label>
-                  <textarea
-                    value={candidateProfile.achievements}
-                    onChange={(e) => handleProfileChange('achievements', e.target.value)}
-                    placeholder="Notable accomplishments, awards, successful projects, metrics, etc."
-                    rows={2}
-                    className="w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 resize-none"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* tomiwa: Analyze button */}
+            {/* tomiwa: Analyze button - dynamic text based on source */}
             <div className="flex justify-center">
               <button
                 onClick={analyzeMatch}
-                disabled={!jobDescription.trim()}
+                disabled={!jobDescription.trim() && !selectedPlatformJob}
                 className="inline-flex items-center gap-2 px-8 py-4 bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 <SparklesIcon className="w-5 h-5" />
-                Analyze Job Match
+                {jobSource === 'platform' && selectedPlatformJob
+                  ? 'Analyze Platform Job Match'
+                  : 'Analyze Job Match'
+                }
               </button>
             </div>
+            
+            {/* tomiwa: Selection status indicator */}
+            {selectedPlatformJob && (
+              <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 mt-4">
+                <div className="flex items-center gap-3">
+                  <CheckCircleIcon className="w-5 h-5 text-emerald-600" />
+                  <div>
+                    <h4 className="font-semibold text-emerald-800">Platform Job Selected</h4>
+                    <p className="text-emerald-700 text-sm">
+                      {selectedPlatformJob.title} at {selectedPlatformJob.company}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
 
@@ -510,306 +886,165 @@ What You'll Do:
           </div>
         )}
 
-        {/* tomiwa: Results Step */}
+        {/* tomiwa: UPDATED - Simplified Results Step for better candidate experience */}
         {activeStep === 'results' && analysisResults && (
-          <div className="space-y-8">
-            {/* tomiwa: Overall match score */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-xl font-bold text-neutral-900 mb-6 flex items-center gap-2">
-                <TrophyIcon className="w-6 h-6 text-emerald-600" />
-                Job Match Analysis
+          <div className="space-y-6">
+            
+            {/* tomiwa: NEW - Hero Match Score Card - Big, friendly, and celebratory */}
+            <div className="bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl shadow-lg p-8 text-center text-white">
+              {/* tomiwa: Big match percentage with visual ring */}
+              <div className="relative inline-flex items-center justify-center mb-4">
+                <div className="w-36 h-36 rounded-full bg-white/20 flex items-center justify-center">
+                  <div className="w-28 h-28 rounded-full bg-white flex items-center justify-center">
+                    <span className="text-5xl font-bold text-primary-600">{analysisResults.overallMatch}%</span>
+                  </div>
+                </div>
+              </div>
+              
+              {/* tomiwa: Friendly match label based on score */}
+              <h2 className="text-2xl font-bold mb-2">
+                {analysisResults.overallMatch >= 85 
+                  ? "Great Match! You're a strong candidate" 
+                  : analysisResults.overallMatch >= 70 
+                    ? "Good Match! You have solid potential"
+                    : "Fair Match - Some areas to improve"}
               </h2>
-              
-              <div className="text-center mb-8">
-                <div className="text-6xl font-bold text-emerald-600 mb-2">{analysisResults.overallMatch}%</div>
-                <div className="text-lg text-neutral-600 mb-4">Overall Match Score</div>
-                <div className={`inline-flex px-4 py-2 rounded-full text-sm font-semibold ${getMatchColor(analysisResults.overallMatch)}`}>
-                  {analysisResults.overallMatch >= 80 ? 'Excellent Match' : 
-                   analysisResults.overallMatch >= 60 ? 'Good Match' : 'Needs Improvement'}
-                </div>
-              </div>
-
-              {/* tomiwa: Match breakdown */}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                {Object.entries(analysisResults.matchBreakdown).map(([category, score]) => (
-                  <div key={category} className="text-center p-4 bg-neutral-50 rounded-lg">
-                    <div className="text-2xl font-bold text-neutral-900 mb-1">{score}%</div>
-                    <div className="text-sm text-neutral-600 capitalize">{category}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* tomiwa: Skills analysis */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h3 className="text-lg font-bold text-neutral-900 mb-6 flex items-center gap-2">
-                <TagIcon className="w-5 h-5 text-brand-aqua" />
-                Skills Analysis
-              </h3>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div>
-                  <h4 className="font-semibold text-emerald-700 mb-3 flex items-center gap-2">
-                    <CheckCircleIcon className="w-4 h-4" />
-                    Matching Skills ({analysisResults.skillsAnalysis.matching.length})
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {analysisResults.skillsAnalysis.matching.map((skill, index) => (
-                      <span key={index} className="px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full text-sm">
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold text-red-700 mb-3 flex items-center gap-2">
-                    <ExclamationTriangleIcon className="w-4 h-4" />
-                    Missing Skills ({analysisResults.skillsAnalysis.missing.length})
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {analysisResults.skillsAnalysis.missing.map((skill, index) => (
-                      <span key={index} className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold text-blue-700 mb-3 flex items-center gap-2">
-                    <SparklesIcon className="w-4 h-4" />
-                    Bonus Skills ({analysisResults.skillsAnalysis.bonus.length})
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {analysisResults.skillsAnalysis.bonus.map((skill, index) => (
-                      <span key={index} className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* tomiwa: Personalized Learning Paths */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h3 className="text-lg font-bold text-neutral-900 mb-6 flex items-center gap-2">
-                <AcademicCapIcon className="w-5 h-5 text-purple-600" />
-                Personalized Learning Paths
-              </h3>
-              <p className="text-neutral-600 mb-6">
-                Based on your skills gap analysis, here are recommended learning paths to improve your job match score:
+              <p className="text-primary-100 text-lg">
+                {jobTitle && companyName 
+                  ? `For ${jobTitle} at ${companyName}`
+                  : 'Based on the job requirements'}
               </p>
+            </div>
+
+            {/* tomiwa: NEW - Simple Quick Summary Card */}
+            <div className="bg-white rounded-xl shadow-sm p-6">
+              <h3 className="text-lg font-bold text-neutral-900 mb-4">Quick Summary</h3>
               
-              <div className="space-y-4">
-                {analysisResults.skillsAnalysis.learningPaths.map((path, index) => (
-                  <div key={index} className="border border-neutral-200 rounded-lg p-4 hover:border-purple-300 transition-colors">
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="flex items-center gap-3">
-                        <h4 className="text-lg font-semibold text-neutral-900">{path.skill}</h4>
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                          path.priority === 'High' 
-                            ? 'bg-red-100 text-red-800' 
-                            : 'bg-orange-100 text-orange-800'
-                        }`}>
-                          {path.priority} Priority
-                        </span>
-                        <span className="px-2 py-1 bg-emerald-100 text-emerald-800 rounded-full text-xs font-medium">
-                          {path.salaryImpact}
-                        </span>
-                      </div>
-                      <div className="text-right text-sm text-neutral-600">
-                        <div className="font-medium">{path.estimatedTime}</div>
-                        <div className="text-xs">{path.difficulty} difficulty</div>
-                      </div>
-                    </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
-                      <div>
-                        <span className="text-sm font-medium text-neutral-700">Market Demand:</span>
-                        <span className={`ml-2 text-sm font-semibold ${
-                          path.marketDemand === 'Very High' 
-                            ? 'text-emerald-600' 
-                            : 'text-blue-600'
-                        }`}>
-                          {path.marketDemand}
-                        </span>
-                      </div>
-                      <div>
-                        <span className="text-sm font-medium text-neutral-700">Potential Impact:</span>
-                        <span className="ml-2 text-sm font-semibold text-emerald-600">
-                          {path.salaryImpact} salary increase
-                        </span>
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <span className="text-sm font-medium text-neutral-700 block mb-2">Recommended Resources:</span>
-                      <div className="flex flex-wrap gap-2">
-                        {path.resources.map((resource, resourceIndex) => (
-                          <span key={resourceIndex} className="px-2 py-1 bg-purple-50 text-purple-700 rounded text-xs">
-                            {resource}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
+              {/* tomiwa: Simple two-column layout for strengths and gaps */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* tomiwa: Your Strengths */}
+                <div className="bg-primary-50 rounded-lg p-4">
+                  <div className="flex items-center gap-2 mb-3">
+                    <CheckCircleIcon className="w-5 h-5 text-primary-600" />
+                    <h4 className="font-semibold text-primary-800">Your Strengths</h4>
                   </div>
-                ))}
+                  <div className="flex flex-wrap gap-2">
+                    {analysisResults.skillsAnalysis.matching.slice(0, 6).map((skill, index) => (
+                      <span key={index} className="px-3 py-1 bg-white text-primary-700 rounded-full text-sm border border-primary-200">
+                        {skill}
+                      </span>
+                    ))}
+                    {analysisResults.skillsAnalysis.matching.length > 6 && (
+                      <span className="px-3 py-1 text-primary-600 text-sm">
+                        +{analysisResults.skillsAnalysis.matching.length - 6} more
+                      </span>
+                    )}
+                  </div>
+                </div>
+                
+                {/* tomiwa: Areas to Develop */}
+                <div className="bg-accent-50 rounded-lg p-4">
+                  <div className="flex items-center gap-2 mb-3">
+                    <LightBulbIcon className="w-5 h-5 text-accent-600" />
+                    <h4 className="font-semibold text-accent-800">Areas to Develop</h4>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {analysisResults.skillsAnalysis.missing.slice(0, 4).map((skill, index) => (
+                      <span key={index} className="px-3 py-1 bg-white text-accent-700 rounded-full text-sm border border-accent-200">
+                        {skill}
+                      </span>
+                    ))}
+                    {analysisResults.skillsAnalysis.missing.length > 4 && (
+                      <span className="px-3 py-1 text-accent-600 text-sm">
+                        +{analysisResults.skillsAnalysis.missing.length - 4} more
+                      </span>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* tomiwa: Application strategy and salary insights */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="bg-white rounded-lg shadow-sm p-6">
-                <h3 className="text-lg font-bold text-neutral-900 mb-4 flex items-center gap-2">
-                  <ChartBarIcon className="w-5 h-5 text-purple-600" />
-                  Application Strategy
-                </h3>
-                
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-neutral-700">Priority Level:</span>
-                    <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                      analysisResults.applicationStrategy.priority === 'High' 
-                        ? 'bg-red-100 text-red-800' 
-                        : 'bg-orange-100 text-orange-800'
-                    }`}>
-                      {analysisResults.applicationStrategy.priority}
-                    </span>
+            {/* tomiwa: NEW - Simple Action Plan Card (combines recommendations) */}
+            <div className="bg-white rounded-xl shadow-sm p-6">
+              <h3 className="text-lg font-bold text-neutral-900 mb-2">Your Action Plan</h3>
+              <p className="text-neutral-600 mb-4">Here's what we recommend to boost your chances:</p>
+              
+              <div className="space-y-3">
+                {/* tomiwa: Action item 1 - Apply soon */}
+                <div className="flex items-start gap-4 p-4 bg-neutral-50 rounded-lg">
+                  <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-primary-700 font-bold text-sm">1</span>
                   </div>
-                  
-                  <div className="flex justify-between items-center">
-                    <span className="text-neutral-700">Success Probability:</span>
-                    <span className="font-semibold text-emerald-600">
-                      {analysisResults.applicationStrategy.successProbability}%
-                    </span>
-                  </div>
-                  
-                  <div className="flex justify-between items-center">
-                    <span className="text-neutral-700">Recommended Action:</span>
-                    <span className="font-semibold text-neutral-900">
-                      {analysisResults.applicationStrategy.timeToApply}
-                    </span>
-                  </div>
-                  
                   <div>
-                    <span className="text-neutral-700 block mb-2">Cover Letter Focus:</span>
-                    <div className="flex flex-wrap gap-2">
-                      {analysisResults.applicationStrategy.coverLetterFocus.map((focus, index) => (
-                        <span key={index} className="px-2 py-1 bg-purple-100 text-purple-800 rounded text-sm">
-                          {focus}
-                        </span>
-                      ))}
-                    </div>
+                    <h4 className="font-semibold text-neutral-900">Apply Soon</h4>
+                    <p className="text-neutral-600 text-sm">
+                      Your {analysisResults.applicationStrategy.successProbability}% success rate means you're competitive. {analysisResults.applicationStrategy.timeToApply}.
+                    </p>
                   </div>
                 </div>
-              </div>
-
-              <div className="bg-white rounded-lg shadow-sm p-6">
-                <h3 className="text-lg font-bold text-neutral-900 mb-4 flex items-center gap-2">
-                  <BanknotesIcon className="w-5 h-5 text-emerald-600" />
-                  Salary Insights
-                </h3>
                 
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-neutral-700">Job Range:</span>
-                    <span className="font-semibold text-neutral-900">
-                      {analysisResults.salaryInsights.range}
-                    </span>
+                {/* tomiwa: Action item 2 - Top skill to learn */}
+                {analysisResults.skillsAnalysis.learningPaths[0] && (
+                  <div className="flex items-start gap-4 p-4 bg-neutral-50 rounded-lg">
+                    <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="text-primary-700 font-bold text-sm">2</span>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-neutral-900">
+                        Consider Learning {analysisResults.skillsAnalysis.learningPaths[0].skill}
+                      </h4>
+                      <p className="text-neutral-600 text-sm">
+                        This skill is in high demand and could increase your match. 
+                        Estimated time: {analysisResults.skillsAnalysis.learningPaths[0].estimatedTime}
+                      </p>
+                    </div>
                   </div>
-                  
-                  <div className="flex justify-between items-center">
-                    <span className="text-neutral-700">Market Average:</span>
-                    <span className="font-semibold text-neutral-900">
-                      {analysisResults.salaryInsights.market}
-                    </span>
+                )}
+                
+                {/* tomiwa: Action item 3 - Cover letter tip */}
+                <div className="flex items-start gap-4 p-4 bg-neutral-50 rounded-lg">
+                  <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-primary-700 font-bold text-sm">3</span>
                   </div>
-                  
-                  <div className="flex justify-between items-center">
-                    <span className="text-neutral-700">Your Level:</span>
-                    <span className="font-semibold text-emerald-600">
-                      {analysisResults.salaryInsights.candidateLevel}
-                    </span>
-                  </div>
-                  
-                  <div className="flex justify-between items-center">
-                    <span className="text-neutral-700">Negotiation Potential:</span>
-                    <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
-                      analysisResults.salaryInsights.negotiationPotential === 'High' 
-                        ? 'bg-emerald-100 text-emerald-800' 
-                        : 'bg-orange-100 text-orange-800'
-                    }`}>
-                      {analysisResults.salaryInsights.negotiationPotential}
-                    </span>
+                  <div>
+                    <h4 className="font-semibold text-neutral-900">Highlight in Your Application</h4>
+                    <p className="text-neutral-600 text-sm">
+                      Focus on: {analysisResults.applicationStrategy.coverLetterFocus.join(', ')}
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* tomiwa: Improvement recommendations */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h3 className="text-lg font-bold text-neutral-900 mb-6 flex items-center gap-2">
-                <LightBulbIcon className="w-5 h-5 text-brand-yellow" />
-                Improvement Recommendations
-              </h3>
-              
-              <div className="space-y-4">
-                {analysisResults.improvements.map((improvement, index) => (
-                  <div key={index} className={`p-4 rounded-lg border ${getPriorityColor(improvement.priority)}`}>
-                    <div className="flex items-start justify-between mb-2">
-                      <div className="flex items-center gap-2">
-                        <h4 className="font-semibold">{improvement.category}</h4>
-                        <span className="text-xs px-2 py-1 rounded-full bg-current text-white opacity-80">
-                          {improvement.priority} Priority
-                        </span>
-                      </div>
-                      <span className="text-sm font-medium">{improvement.timeframe}</span>
-                    </div>
-                    <p className="text-sm mb-3">{improvement.suggestion}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {improvement.resources.map((resource, resourceIndex) => (
-                        <span key={resourceIndex} className="text-xs bg-white/50 px-2 py-1 rounded">
-                          {resource}
-                        </span>
-                      ))}
-                    </div>
+            {/* tomiwa: NEW - Simple Salary Insight (optional expandable) */}
+            <div className="bg-white rounded-xl shadow-sm p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-bold text-neutral-900">Salary Range</h3>
+                <span className="text-sm text-neutral-500">Based on market data</span>
+              </div>
+              <div className="flex items-center gap-6">
+                <div className="flex-1">
+                  <div className="h-3 bg-neutral-100 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-gradient-to-r from-primary-400 to-primary-600 rounded-full"
+                      style={{ width: '75%' }}
+                    ></div>
                   </div>
-                ))}
+                  <div className="flex justify-between mt-2 text-sm">
+                    <span className="text-neutral-500">{analysisResults.salaryInsights.range.split('-')[0]}</span>
+                    <span className="text-primary-600 font-semibold">Your Level: {analysisResults.salaryInsights.candidateLevel}</span>
+                    <span className="text-neutral-500">{analysisResults.salaryInsights.range.split('-')[1]}</span>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* tomiwa: Company culture fit */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h3 className="text-lg font-bold text-neutral-900 mb-6 flex items-center gap-2">
-                <BuildingOfficeIcon className="w-5 h-5 text-indigo-600" />
-                Company Culture Fit
-              </h3>
+            {/* tomiwa: UPDATED - Next Steps with cleaner design */}
+            <div className="bg-primary-50 border border-primary-200 rounded-xl p-6">
+              <h3 className="text-lg font-bold text-neutral-900 mb-2">Ready to Apply?</h3>
+              <p className="text-neutral-600 mb-4">Use our AI tools to strengthen your application:</p>
               
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                {Object.entries(analysisResults.companyFit).filter(([key]) => key !== 'insights').map(([category, score]) => (
-                  <div key={category} className="text-center p-4 bg-indigo-50 rounded-lg">
-                    <div className="text-2xl font-bold text-indigo-600 mb-1">{score}%</div>
-                    <div className="text-sm text-neutral-600 capitalize">{category}</div>
-                  </div>
-                ))}
-              </div>
-              
-              <div className="space-y-2">
-                {analysisResults.companyFit.insights.map((insight, index) => (
-                  <div key={index} className="flex items-center gap-2">
-                    <CheckCircleIcon className="w-4 h-4 text-indigo-600" />
-                    <span className="text-sm text-neutral-700">{insight}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* tomiwa: UPDATED - Workflow navigation buttons */}
-            <div className="bg-gradient-to-r from-brand-aqua to-brand-orange rounded-lg p-6 mt-8">
-              <h3 className="text-lg font-bold text-white mb-4">Next Steps in Your Application Journey</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <button
                   onClick={() => {
                     const resumeParams = new URLSearchParams({
@@ -821,9 +1056,9 @@ What You'll Do:
                     });
                     router.push(`/dashboard/candidate/ai-tools/resume-optimizer?${resumeParams.toString()}`);
                   }}
-                  className="bg-white text-brand-aqua font-semibold py-3 px-4 rounded-lg hover:bg-neutral-50 transition-colors text-center"
+                  className="bg-white border border-primary-300 text-primary-700 font-semibold py-3 px-4 rounded-lg hover:bg-primary-100 hover:border-primary-400 transition-colors text-center"
                 >
-                  📄 Optimize Resume for This Job
+                  📄 Optimize Resume
                 </button>
                 
                 <button
@@ -837,9 +1072,9 @@ What You'll Do:
                     });
                     router.push(`/dashboard/candidate/ai-tools/cover-letter-generator?${coverLetterParams.toString()}`);
                   }}
-                  className="bg-white text-brand-orange font-semibold py-3 px-4 rounded-lg hover:bg-neutral-50 transition-colors text-center"
+                  className="bg-white border border-primary-300 text-primary-700 font-semibold py-3 px-4 rounded-lg hover:bg-primary-100 hover:border-primary-400 transition-colors text-center"
                 >
-                  ✍️ Generate Cover Letter
+                  ✍️ Cover Letter
                 </button>
                 
                 <button
@@ -852,17 +1087,17 @@ What You'll Do:
                     });
                     router.push(`/dashboard/candidate/ai-tools/interview-simulator?${interviewParams.toString()}`);
                   }}
-                  className="bg-white text-purple-600 font-semibold py-3 px-4 rounded-lg hover:bg-neutral-50 transition-colors text-center"
+                  className="bg-white border border-primary-300 text-primary-700 font-semibold py-3 px-4 rounded-lg hover:bg-primary-100 hover:border-primary-400 transition-colors text-center"
                 >
-                  🎤 Prepare for Interview
+                  🎤 Practice Interview
                 </button>
               </div>
               
               {fromApplication && (
-                <div className="mt-4 pt-4 border-t border-white/20">
+                <div className="mt-4 pt-4 border-t border-primary-200">
                   <button
                     onClick={() => router.push('/dashboard/candidate/applications')}
-                    className="bg-white/20 text-white font-semibold py-2 px-4 rounded-lg hover:bg-white/30 transition-colors"
+                    className="text-primary-700 font-medium hover:text-primary-800 transition-colors"
                   >
                     ← Back to Applications
                   </button>
@@ -870,8 +1105,8 @@ What You'll Do:
               )}
             </div>
             
-            {/* tomiwa: Additional action buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-6">
+            {/* tomiwa: UPDATED - Simpler action buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <button
                 onClick={() => {
                   setActiveStep('input');
@@ -879,12 +1114,8 @@ What You'll Do:
                   setJobDescription('');
                   setJobTitle('');
                   setCompanyName('');
-                  setCandidateProfile({
-                    skills: '',
-                    experience: '',
-                    education: '',
-                    achievements: ''
-                  });
+                  setJobSource('custom');
+                  setSelectedPlatformJob(null);
                 }}
                 className="px-6 py-3 border-2 border-neutral-300 text-neutral-700 font-semibold rounded-lg hover:bg-neutral-50 transition-colors"
               >
@@ -894,7 +1125,7 @@ What You'll Do:
                 href="/dashboard/candidate/ai-tools"
                 className="px-6 py-3 border-2 border-brand-aqua text-brand-aqua font-semibold rounded-lg hover:bg-brand-aqua hover:text-white transition-colors text-center"
               >
-                Try Other AI Tools
+                Explore More AI Tools
               </Link>
             </div>
           </div>
