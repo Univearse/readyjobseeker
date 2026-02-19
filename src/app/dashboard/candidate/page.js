@@ -57,9 +57,9 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import CandidateDashboardLayout from '@/components/layouts/CandidateDashboardLayout';
-import JobDetailsModal from '@/components/ui/modals/JobDetailsModal';
-import DashboardCard from '@/components/ui/DashboardCard';
+import CandidateDashboardLayout from '@/components/layouts/CandidateDashboardLayout.jsx';
+import JobDetailsModal from '@/components/ui/modals/JobDetailsModal.jsx';
+import DashboardCard from '@/components/ui/DashboardCard.js';
 import {
   DocumentTextIcon,
   CalendarIcon,
@@ -75,10 +75,12 @@ import {
   EnvelopeIcon,
   RocketLaunchIcon,
   ChartBarIcon,
+  ExclamationCircleIcon, // tomiwa: updated - Added missing import for toast notification
 } from '@heroicons/react/24/outline';
 import { BookmarkIcon as BookmarkSolidIcon } from '@heroicons/react/24/solid';
 
 // tomiwa: NEW - Mock data for Featured Jobs section (premium/sponsored listings)
+// updated: Changed all salaries from USD ($) to NERA (₦) currency
 const featuredJobs = [
   {
     id: 1,
@@ -86,7 +88,7 @@ const featuredJobs = [
     company: 'Paystack',
     companyLogo: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=100&h=100&fit=crop',
     location: 'Lagos, Nigeria',
-    salary: '$80k - $120k',
+    salary: '₦800k - ₦1.2M',
     tag: 'Featured',
     tagColor: 'bg-brand-orange text-white',
     isSaved: false,
@@ -97,7 +99,7 @@ const featuredJobs = [
     company: 'Flutterwave',
     companyLogo: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=100&h=100&fit=crop',
     location: 'Remote',
-    salary: '$90k - $140k',
+    salary: '₦900k - ₦1.4M',
     tag: 'New',
     tagColor: 'bg-brand-aqua text-white',
     isSaved: true,
@@ -108,7 +110,7 @@ const featuredJobs = [
     company: 'Figma',
     companyLogo: 'https://images.unsplash.com/photo-1633409361618-c73427e4e206?w=100&h=100&fit=crop',
     location: 'Remote (Worldwide)',
-    salary: '$100k - $150k',
+    salary: '₦1M - ₦1.5M',
     tag: 'Featured',
     tagColor: 'bg-brand-orange text-white',
     isSaved: false,
@@ -119,7 +121,7 @@ const featuredJobs = [
     company: 'Interswitch',
     companyLogo: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=100&h=100&fit=crop',
     location: 'Hybrid - Lagos',
-    salary: '$70k - $110k',
+    salary: '₦700k - ₦1.1M',
     tag: 'New',
     tagColor: 'bg-brand-aqua text-white',
     isSaved: false,
@@ -130,7 +132,7 @@ const featuredJobs = [
     company: 'Kuda Bank',
     companyLogo: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=100&h=100&fit=crop',
     location: 'Lagos, Nigeria',
-    salary: '$60k - $95k',
+    salary: '₦600k - ₦950k',
     tag: 'Featured',
     tagColor: 'bg-brand-orange text-white',
     isSaved: true,
@@ -141,7 +143,7 @@ const featuredJobs = [
     company: 'Andela',
     companyLogo: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=100&h=100&fit=crop',
     location: 'Remote',
-    salary: '$85k - $125k',
+    salary: '₦850k - ₦1.25M',
     tag: 'New',
     tagColor: 'bg-brand-aqua text-white',
     isSaved: false,
@@ -265,30 +267,42 @@ export default function CandidateDashboard() {
 
   return (
     <CandidateDashboardLayout>
-        {/* tomiwa: UPDATED - Hero Section matching employer dashboard layout */}
-        <div className="bg-gradient-to-r from-brand-aqua to-[#0C2E3C]">
-          <div className="max-w-7xl mx-auto px-8 py-12">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
-              <div className="flex items-center gap-6">
-                <div className="bg-white p-3 rounded-2xl shadow-lg">
-                  <Image
-                    src="/images/logo.png"
-                    alt="ReadyJobSeeker Logo"
-                    width={56}
-                    height={56}
-                    className="rounded-xl"
-                  />
-                </div>
-                <div>
-                  <h1 className="text-3xl font-display font-bold text-white">
-                    Welcome back, John
-              </h1>
-                  <p className="text-white/80 mt-1">Your career command center</p>
-            </div>
+        {/* tomiwa: UPDATED - Uniform Hero Banner matching AI Tools design */}
+        {/* updated: Simplified to match uniform header design across all pages */}
+        <div className="bg-gradient-to-r from-brand-aqua to-[#0C5B65]">
+          <div className="px-6 
+                          sm:px-8 
+                          md:px-10 
+                          lg:px-12 
+                          xl:px-16 
+                          2xl:px-20 
+                          py-10 
+                          sm:py-12 
+                          md:py-14 
+                          lg:py-16">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-6">
+              <div className="flex-1">
+                {/* tomiwa: Main heading with Monument Extended font */}
+                <h1 className="text-3xl 
+                              sm:text-4xl 
+                              md:text-4xl 
+                              lg:text-5xl 
+                              font-display font-bold text-white mb-2">
+                  Candidate Dashboard
+                </h1>
+                {/* tomiwa: Subtitle in uniform style */}
+                <p className="text-[#D9E5E6] text-base 
+                             sm:text-lg 
+                             md:text-lg 
+                             lg:text-xl 
+                             leading-relaxed max-w-2xl">
+                  Discover new opportunities, track your progress, and stay connected with your career journey
+                </p>
               </div>
+              {/* tomiwa: CTA button for main dashboard */}
               <Link
                 href="/jobs"
-                className="bg-brand-orange hover:bg-brand-orange/90 text-white px-8 py-3 rounded-xl font-medium transition-all duration-300 flex items-center gap-2 shadow-lg hover:scale-105"
+                className="bg-brand-orange hover:bg-brand-orange/90 text-white px-8 py-3 rounded-xl font-medium transition-all duration-300 flex items-center gap-2 shadow-lg hover:scale-105 whitespace-nowrap"
               >
                 <MagnifyingGlassIcon className="w-5 h-5" />
                 Browse Jobs

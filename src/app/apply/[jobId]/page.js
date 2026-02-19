@@ -19,9 +19,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import CandidateDashboardLayout from '@/components/layouts/CandidateDashboardLayout';
-import { Card } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
+import CandidateDashboardLayout from '@/components/layouts/CandidateDashboardLayout.jsx';
+import { Card } from '@/components/ui/Card.jsx';
+import { Button } from '@/components/ui/Button.jsx';
 import Toast from '@/components/ui/Toast';
 import {
   // tomiwa: Icon imports for apply flow

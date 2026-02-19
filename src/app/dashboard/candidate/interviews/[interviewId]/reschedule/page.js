@@ -18,7 +18,7 @@
 import React, { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import CandidateDashboardLayout from '@/components/layouts/CandidateDashboardLayout';
+import CandidateDashboardLayout from '@/components/layouts/CandidateDashboardLayout.jsx';
 import {
   // tomiwa: Icon imports for reschedule page UI
   CalendarIcon,

@@ -19,13 +19,13 @@ import {
   ArrowTrendingUpIcon,
   UserGroupIcon,
 } from '@heroicons/react/24/outline';
-import DashboardCard from '@/components/ui/DashboardCard';
-import { Card } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
-import StatusBadge from '@/components/ui/StatusBadge';
-import UpgradePlanModal from '@/components/ui/modals/UpgradePlanModal';
-import PaymentMethodModal from '@/components/ui/modals/PaymentMethodModal';
-import InvoiceDetailsModal from '@/components/ui/modals/InvoiceDetailsModal';
+import DashboardCard from '@/components/ui/DashboardCard.js';
+import { Card } from '@/components/ui/Card.jsx';
+import { Button } from '@/components/ui/Button.jsx';
+import StatusBadge from '@/components/ui/StatusBadge.jsx';
+import UpgradePlanModal from '@/components/ui/modals/UpgradePlanModal.jsx';
+import PaymentMethodModal from '@/components/ui/modals/PaymentMethodModal.jsx';
+import InvoiceDetailsModal from '@/components/ui/modals/InvoiceDetailsModal.jsx';
 
 // tomiwa: Mock data for subscription and billing information
 const currentPlan = {

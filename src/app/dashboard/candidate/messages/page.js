@@ -17,7 +17,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import CandidateDashboardLayout from '@/components/layouts/CandidateDashboardLayout';
+import CandidateDashboardLayout from '@/components/layouts/CandidateDashboardLayout.jsx';
 import {
   // tomiwa: Icon imports for messages page
   ChatBubbleLeftRightIcon,

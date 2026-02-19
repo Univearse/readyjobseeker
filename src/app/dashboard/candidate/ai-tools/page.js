@@ -17,7 +17,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import CandidateDashboardLayout from '@/components/layouts/CandidateDashboardLayout';
+import CandidateDashboardLayout from '@/components/layouts/CandidateDashboardLayout.jsx';
 import { candidateAiTools } from '@/data/candidateAiTools';
 import {
   SparklesIcon,

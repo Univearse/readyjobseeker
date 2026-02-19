@@ -18,7 +18,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import CandidateDashboardLayout from '@/components/layouts/CandidateDashboardLayout';
+import CandidateDashboardLayout from '@/components/layouts/CandidateDashboardLayout.jsx';
 import StatusPill from '@/components/ui/StatusPill';
 import ProgressBar from '@/components/ui/ProgressBar';
 import NextActionButton from '@/components/ui/NextActionButton';

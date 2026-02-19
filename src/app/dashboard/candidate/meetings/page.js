@@ -8,10 +8,10 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import CandidateDashboardLayout from '@/components/layouts/CandidateDashboardLayout';
+import CandidateDashboardLayout from '@/components/layouts/CandidateDashboardLayout.jsx';
 import Calendar from '@/components/ui/Calendar';
 import InterviewDetailsModal from '@/components/ui/modals/InterviewDetailsModal';
-import { Card } from '@/components/ui/Card';
+import { Card } from '@/components/ui/Card.jsx';
 import {
   CalendarIcon,
   SparklesIcon,

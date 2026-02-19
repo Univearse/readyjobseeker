@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { Dialog } from '@headlessui/react';
 import { Chip } from '@/components/ui/Chip';
-import { Button } from '@/components/ui/Button';
-import { Card } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button.jsx';
+import { Card } from '@/components/ui/Card.jsx';
 import { Select } from '@/components/ui/Select';
 
 // tomiwa: Mock data for active jobs - replace with actual API call

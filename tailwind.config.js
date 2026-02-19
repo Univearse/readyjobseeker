@@ -67,8 +67,8 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ['var(--font-poppins)', 'system-ui', 'sans-serif'], // Make Poppins the default sans font
-        display: ['Monument Extended', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-montserrat-alternates)', 'system-ui', 'sans-serif'], // Montserrat Alternates for body text and UI elements
+        display: ['Monument Extended', 'var(--font-montserrat-alternates)', 'system-ui', 'sans-serif'], // Monument Extended for headers with fallback
       },
     },
   },

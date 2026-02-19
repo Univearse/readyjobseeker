@@ -16,7 +16,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import CandidateDashboardLayout from '@/components/layouts/CandidateDashboardLayout';
+import CandidateDashboardLayout from '@/components/layouts/CandidateDashboardLayout.jsx';
 import {
   BookOpenIcon,
   ShieldCheckIcon,
@@ -283,44 +283,46 @@ export default function AIToolGuide() {
 
   return (
     <CandidateDashboardLayout>
-      {/* tomiwa: Header section with navigation */}
-      <div className="mb-8">
-        <div className="flex items-center gap-4 mb-6">
+      {/* tomiwa: UPDATED - Uniform Hero Banner matching AI Tools design */}
+      {/* updated: Back navigation moved inside gradient for uniform design */}
+      <div className="bg-gradient-to-r from-brand-aqua to-[#0C5B65] -mt-8 -mx-6 mb-8">
+        <div className="px-6 
+                        sm:px-8 
+                        md:px-10 
+                        lg:px-12 
+                        xl:px-16 
+                        2xl:px-20 
+                        py-10 
+                        sm:py-12 
+                        md:py-14 
+                        lg:py-16">
+          
+          {/* tomiwa: Back navigation - inside gradient for uniform design */}
           <Link
             href="/dashboard/candidate/ai-tools"
-            className="inline-flex items-center gap-2 text-brand-aqua hover:text-[#0C5B65] transition-colors"
+            className="inline-flex items-center gap-2 text-white/80 hover:text-white transition-colors text-sm font-medium mb-6"
           >
             <ArrowLeftIcon className="w-4 h-4" />
-            <span className="text-sm font-medium">Back to AI Tools</span>
+            <span>Back to AI Tools</span>
           </Link>
-        </div>
 
-        <div className="bg-gradient-to-r from-brand-aqua to-[#0C5B65] -mx-6 -mt-8 mb-8">
-          <div className="px-6 
-                          sm:px-8 
-                          md:px-10 
-                          lg:px-12 
-                          xl:px-16 
-                          2xl:px-20 
-                          py-10 
-                          sm:py-12 
-                          md:py-14 
-                          lg:py-16">
-            <div className="max-w-4xl">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-6">
+            <div className="flex-1">
+              {/* tomiwa: Main heading with Monument Extended font */}
               <h1 className="text-3xl 
                             sm:text-4xl 
                             md:text-4xl 
                             lg:text-5xl 
-                            font-display font-bold text-white mb-4">
+                            font-display font-bold text-white mb-2">
                 AI Tool Usage Guide
               </h1>
+              {/* tomiwa: Subtitle in uniform style */}
               <p className="text-[#D9E5E6] text-base 
                            sm:text-lg 
                            md:text-lg 
                            lg:text-xl 
-                           leading-relaxed max-w-3xl">
-                Master the art of AI-assisted job searching with our comprehensive guide covering best practices, 
-                ethics, and data verification techniques.
+                           leading-relaxed max-w-2xl">
+                Master the art of AI-assisted job searching with our comprehensive guide covering best practices, ethics, and data verification techniques
               </p>
             </div>
           </div>

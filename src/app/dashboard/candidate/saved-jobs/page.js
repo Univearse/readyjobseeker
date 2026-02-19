@@ -19,9 +19,9 @@
 
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
-import CandidateDashboardLayout from '@/components/layouts/CandidateDashboardLayout';
-import { Card } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
+import CandidateDashboardLayout from '@/components/layouts/CandidateDashboardLayout.jsx';
+import { Card } from '@/components/ui/Card.jsx';
+import { Button } from '@/components/ui/Button.jsx';
 import ConfirmModal from '@/components/ui/ConfirmModal';
 import Toast from '@/components/ui/Toast';
 import {

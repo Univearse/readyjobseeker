@@ -9,7 +9,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import CandidateDashboardLayout from '@/components/layouts/CandidateDashboardLayout';
+import CandidateDashboardLayout from '@/components/layouts/CandidateDashboardLayout.jsx';
 import { 
   UserCircleIcon, 
   PencilIcon, 

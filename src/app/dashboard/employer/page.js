@@ -16,11 +16,11 @@ import {
   StarIcon,
   BuildingOfficeIcon,
 } from '@heroicons/react/24/outline';
-import DashboardCard from '@/components/ui/DashboardCard';
-import JobsTable from '@/components/ui/JobsTable';
-import InsightsCard, { PerformanceMetric, SourceBreakdown } from '@/components/ui/InsightsCard';
-import QuickLink from '@/components/ui/QuickLink';
-import EmployerDashboardLayout from '@/components/layouts/EmployerDashboardLayout';
+import DashboardCard from '@/components/ui/DashboardCard.js';
+import JobsTable from '@/components/ui/JobsTable.jsx';
+import InsightsCard, { PerformanceMetric, SourceBreakdown } from '@/components/ui/InsightsCard.jsx';
+import QuickLink from '@/components/ui/QuickLink.jsx';
+import EmployerDashboardLayout from '@/components/layouts/EmployerDashboardLayout.jsx';
 
 // tomiwa: Mock data for demonstration
 const mockJobs = [

@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Card } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card.jsx';
+import { Button } from '@/components/ui/Button.jsx';
 import { Select } from '@/components/ui/Select';
 import { Chip } from '@/components/ui/Chip';
 
